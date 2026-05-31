@@ -9,7 +9,7 @@ import { Badge } from "antd";
 export default function Menu() {
   // context
   const [auth, setAuth] = useAuth();
-  const [cart, setCart] = useCart();
+  const [cart] = useCart();
   // hooks
   const categories = useCategory();
   const navigate = useNavigate();
@@ -24,27 +24,28 @@ export default function Menu() {
 
   return (
     <>
-      <ul className="nav d-flex justify-content-between shadow-sm mb-2 sticky-top bg-light" style={{backgroundColor: "black"}}>
-        <li className="nav-item">
+      <nav className="shop-navbar sticky-top">
+        <NavLink className="brand-link" aria-current="page" to="/">
+          ShopEase
+        </NavLink>
+
+        <div className="nav-links">
           <NavLink className="nav-link" aria-current="page" to="/">
-            HOME
+            Home
           </NavLink>
-        </li>
 
-        <li className="nav-item">
           <NavLink className="nav-link" aria-current="page" to="/shop">
-            SHOP
+            Shop
           </NavLink>
-        </li>
 
-        <div className="dropdown">
-          <li>
-            <a
+          <div className="dropdown">
+            <button
+              type="button"
               className="nav-link pointer dropdown-toggle"
               data-bs-toggle="dropdown"
             >
-              CATEGORIES
-            </a>
+              Categories
+            </button>
 
             <ul
               className="dropdown-menu"
@@ -64,45 +65,40 @@ export default function Menu() {
                 </li>
               ))}
             </ul>
-          </li>
+          </div>
         </div>
 
-        <li className="nav-item mt-1">
+        <div className="nav-actions">
+          <Search />
+
           <Badge
             count={cart?.length >= 1 ? cart.length : 0}
             offset={[-5, 11]}
             showZero={true}
           >
             <NavLink className="nav-link" aria-current="page" to="/cart">
-              CART
+              Cart
             </NavLink>
           </Badge>
-        </li>
 
-        <Search />
-
-        {!auth?.user ? (
-          <>
-            <li className="nav-item">
+          {!auth?.user ? (
+            <>
               <NavLink className="nav-link" to="/login">
-                LOGIN
+                Login
               </NavLink>
-            </li>
-            <li className="nav-item">
               <NavLink className="nav-link" to="/register">
-                REGISTER
+                Register
               </NavLink>
-            </li>
-          </>
-        ) : (
-          <div className="dropdown">
-            <li>
-              <a
+            </>
+          ) : (
+            <div className="dropdown">
+              <button
+                type="button"
                 className="nav-link pointer dropdown-toggle"
                 data-bs-toggle="dropdown"
               >
                 {auth?.user?.name?.toUpperCase()}
-              </a>
+              </button>
 
               <ul className="dropdown-menu">
                 <li>
@@ -117,15 +113,15 @@ export default function Menu() {
                 </li>
 
                 <li className="nav-item pointer">
-                  <a onClick={logout} className="nav-link">
+                  <button type="button" onClick={logout} className="nav-link logout-button">
                     Logout
-                  </a>
+                  </button>
                 </li>
               </ul>
-            </li>
-          </div>
-        )}
-      </ul>
+            </div>
+          )}
+        </div>
+      </nav>
     </>
   );
 }

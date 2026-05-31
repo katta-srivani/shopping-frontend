@@ -54,13 +54,11 @@ export default function Home() {
 
   return (
     <div>
-      <Jumbotron title="Hello World" sutTitle="Welcome to React E-commerce" />
+      <Jumbotron title="Fresh finds for every cart" subTitle="Browse new arrivals, best sellers, and everyday essentials in one clean storefront." />
       <div className="container-fluid">
         <div className="row">
-          <div className="col-md-6">
-            <h2 className="p-3 mt-2 mb-2 h4 bg-light text-center" style={{color: "orange"}}>
-              New Arrivals for Independence Day
-            </h2>
+          <div className="col-md-6 section-panel">
+            <h2 className="section-title">New Arrivals</h2>
             <div className="row">
               {products?.map((p) => (
                 <div className="col-md-6" key={p._id}>
@@ -70,10 +68,8 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="col-md-6">
-            <h2 className="p-3 mt-2 mb-2 h4 bg-light text-center">
-              Best Sellers
-            </h2>
+          <div className="col-md-6 section-panel">
+            <h2 className="section-title">Best Sellers</h2>
             <div className="row">
               {sortedBySold?.map((p) => (
                 <div className="col-md-6" key={p._id}>
@@ -87,7 +83,7 @@ export default function Home() {
         <div className="container text-center p-5">
           {products && products.length < total && (
             <button
-              className="btn btn-warning btn-lg col-md-6"
+              className="btn btn-primary btn-lg col-md-6"
               disabled={loading}
               onClick={(e) => {
                 e.preventDefault();

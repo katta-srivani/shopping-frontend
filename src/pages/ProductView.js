@@ -16,6 +16,7 @@ import {
 import ProductCard from "../components/cards/ProductCard";
 import toast from "react-hot-toast";
 import { useCart } from "../context/cart";
+import { PRODUCT_PLACEHOLDER, productPhotoUrl } from "../config";
 
 export default function ProductView() {
   // context
@@ -68,8 +69,11 @@ export default function ProductView() {
               >
                 <img
                   className="card-img-top"
-                  src={`${process.env.REACT_APP_API}/product/photo/${product._id}`}
+                  src={productPhotoUrl(product?._id)}
                   alt={product.name}
+                  onError={(event) => {
+                    event.currentTarget.src = PRODUCT_PLACEHOLDER;
+                  }}
                   style={{ height: "500px", width: "100%", objectFit: "cover" }}
                 />
               </Badge.Ribbon>
@@ -86,7 +90,7 @@ export default function ProductView() {
                   <FaDollarSign /> Price:{" "}
                   {product?.price?.toLocaleString("en-US", {
                     style: "currency",
-                    currency: "USD",
+                    currency: "INR",
                   })}
                 </p>
 

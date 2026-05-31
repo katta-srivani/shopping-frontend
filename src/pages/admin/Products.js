@@ -5,6 +5,7 @@ import AdminMenu from "../../components/nav/AdminMenu";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import moment from "moment";
+import { PRODUCT_PLACEHOLDER, productPhotoUrl } from "../../config";
 
 export default function AdminProducts() {
   // context
@@ -49,8 +50,11 @@ export default function AdminProducts() {
                   <div className="row g-0">
                     <div className="col-md-4">
                       <img
-                        src={`${process.env.REACT_APP_API}/product/photo/${p._id}`}
+                        src={productPhotoUrl(p?._id)}
                         alt={p.name}
+                        onError={(event) => {
+                          event.currentTarget.src = PRODUCT_PLACEHOLDER;
+                        }}
                         className="img img-fluid rounded-start"
                       />
                     </div>

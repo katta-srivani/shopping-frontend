@@ -6,6 +6,7 @@ import axios from "axios";
 import { Select } from "antd";
 import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
+import { PRODUCT_PLACEHOLDER, productPhotoUrl } from "../../config";
 
 const { Option } = Select;
 
@@ -125,10 +126,11 @@ export default function AdminProductUpdate() {
             ) : (
               <div className="text-center">
                 <img
-                  src={`${
-                    process.env.REACT_APP_API
-                  }/product/photo/${id}?${new Date().getTime()}`}
+                  src={`${productPhotoUrl(id)}?${new Date().getTime()}`}
                   alt="product photo"
+                  onError={(event) => {
+                    event.currentTarget.src = PRODUCT_PLACEHOLDER;
+                  }}
                   className="img img-responsive"
                   height="200px"
                 />

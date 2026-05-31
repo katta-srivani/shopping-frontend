@@ -1,5 +1,6 @@
 import moment from "moment";
 import { useCart } from "../../context/cart";
+import { PRODUCT_PLACEHOLDER, productPhotoUrl } from "../../config";
 
 export default function ProductCardHorizontal({ p, remove = true }) {
   // context
@@ -21,8 +22,11 @@ export default function ProductCardHorizontal({ p, remove = true }) {
       <div className="row g-0">
         <div className="col-md-4">
           <img
-            src={`${process.env.REACT_APP_API}/product/photo/${p._id}`}
+            src={productPhotoUrl(p?._id)}
             alt={p.name}
+            onError={(event) => {
+              event.currentTarget.src = PRODUCT_PLACEHOLDER;
+            }}
             style={{
               height: "150px",
               width: "150px",
@@ -38,7 +42,7 @@ export default function ProductCardHorizontal({ p, remove = true }) {
               {p.name}{" "}
               {p?.price?.toLocaleString("en-US", {
                 style: "currency",
-                currency: "USD",
+                currency: "INR",
               })}
             </h5>
             <p className="card-text">{`${p?.description?.substring(

@@ -2,6 +2,7 @@ import { Badge } from "antd";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../../context/cart";
+import { PRODUCT_PLACEHOLDER, productPhotoUrl } from "../../config";
 
 export default function ProductCard({ p }) {
   // context
@@ -10,12 +11,12 @@ export default function ProductCard({ p }) {
   const navigate = useNavigate();
 
   return (
-    <div className="card mb-3 hoverable">
-      <Badge.Ribbon text={`${p?.sold} sold`} color="red">
+    <div className="card product-card mb-3 hoverable">
+      <Badge.Ribbon text={`${p?.sold || 0} sold`} color="red">
         <Badge.Ribbon
           text={`${
             p?.quantity >= 1
-              ? `${p?.quantity - p?.sold} in stock`
+              ? `${Math.max((p?.quantity || 0) - (p?.sold || 0), 0)} in stock`
               : "Out of stock"
           }`}
           placement="start"
@@ -23,9 +24,11 @@ export default function ProductCard({ p }) {
         >
           <img
             className="card-img-top"
-            src={`${process.env.REACT_APP_API}/product/photo/${p._id}`}
+            src={productPhotoUrl(p?._id)}
             alt={p.name}
-            style={{ height: "300px", objectFit: "cover" }}
+            onError={(event) => {
+              event.currentTarget.src = PRODUCT_PLACEHOLDER;
+            }}
           />
         </Badge.Ribbon>
       </Badge.Ribbon>

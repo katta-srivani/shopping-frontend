@@ -67,17 +67,16 @@ export default function Shop() {
 
   return (
     <>
-      <Jumbotron title="Hello World" subTitle="Welcome to React E-commerce" />
+      <Jumbotron title="Shop the collection" subTitle="Filter by category and price to quickly find the right product." />
 
       {/* <pre>{JSON.stringify({ checked, radio }, null, 4)}</pre> */}
 
       <div className="container-fluid">
         <div className="row">
           <div className="col-md-3">
-            <h2 className="p-3 mt-2 mb-2 h4 bg-light text-center">
-              Filter by Categories
-            </h2>
-            <div className="row p-5">
+            <aside className="filter-panel">
+            <h2>Categories</h2>
+            <div className="filter-options">
               {categories?.map((c) => (
                 <Checkbox
                   key={c._id}
@@ -88,10 +87,8 @@ export default function Shop() {
               ))}
             </div>
 
-            <h2 className="p-3 mt-2 mb-2 h4 bg-light text-center">
-              Filter by Price
-            </h2>
-            <div className="row p-5">
+            <h2>Price</h2>
+            <div className="filter-options">
               <Radio.Group onChange={(e) => setRadio(e.target.value)}>
                 {prices?.map((p) => (
                   <div key={p._id} style={{ marginLeft: "8px" }}>
@@ -109,16 +106,14 @@ export default function Shop() {
                 Reset
               </button>
             </div>
+            </aside>
           </div>
 
           <div className="col-md-9">
-            <h2 className="p-3 mt-2 mb-2 h4 bg-light text-center">
-              {products?.length} Products
-            </h2>
+            <h2 className="section-title">{products?.length} Products</h2>
 
             <div
-              className="row"
-              style={{ height: "100vh", overflow: "scroll" }}
+              className="row product-scroll"
             >
               {products?.map((p) => (
                 <div className="col-md-4" key={p._id}>
